@@ -13,13 +13,20 @@
         android:theme="@style/Theme.NASAPicturesApp">
         <activity
             android:name=".ui.grid.ImageGridActivity"
-            android:exported="true">
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.detail.ImageDetailActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

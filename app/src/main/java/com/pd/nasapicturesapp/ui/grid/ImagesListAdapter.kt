@@ -12,8 +12,8 @@ import com.pd.nasapicturesapp.utils.click
 import com.pd.nasapicturesapp.utils.loadUrl
 
 class ImagesListAdapter(
-    var products: ArrayList<ImageData>,
-    var onTapClicked: (String?) -> Unit = {}
+    var images: ArrayList<ImageData>,
+    var onTapClicked: (Int?) -> Unit = {}
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private lateinit var binding: AdapterImagesListBinding
@@ -30,8 +30,8 @@ class ImagesListAdapter(
     @SuppressLint("StringFormatInvalid")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         with(binding) {
-            imgPic.loadUrl(products[position].url, R.drawable.ic_launcher_foreground)
-            imgPic.click { onTapClicked(products[position].url) }
+            imgPic.loadUrl(images[position].url, R.drawable.ic_launcher_foreground)
+            imgPic.click { onTapClicked(position) }
         }
     }
 
@@ -40,16 +40,16 @@ class ImagesListAdapter(
     }
 
     override fun getItemCount(): Int {
-        return products.size
+        return images.size
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setUpdatedData(products: ArrayList<ImageData>) {
-        this.products = products
+    fun setUpdatedData(images: ArrayList<ImageData>) {
+        this.images = images
         notifyDataSetChanged()
     }
 
     fun clearData() {
-        this.products.clear()
+        this.images.clear()
     }
 }

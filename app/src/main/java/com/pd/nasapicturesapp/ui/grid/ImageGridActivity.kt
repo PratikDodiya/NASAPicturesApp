@@ -7,13 +7,15 @@ import com.google.gson.reflect.TypeToken
 import com.pd.nasapicturesapp.databinding.ActivityImageGridBinding
 import com.pd.nasapicturesapp.helpers.GridSpacingItemDecoration
 import com.pd.nasapicturesapp.models.ImageData
+import com.pd.nasapicturesapp.ui.detail.ImageDetailActivity
+import com.pd.nasapicturesapp.utils.launchActivity
 import com.pd.nasapicturesapp.utils.readAssetsFile
 import com.pd.nasapicturesapp.utils.setManager
 import kotlin.math.roundToInt
 
 class ImageGridActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityImageGridBinding
+    lateinit var binding: ActivityImageGridBinding
     var adapter: ImagesListAdapter? = null
 
 
@@ -32,11 +34,16 @@ class ImageGridActivity : AppCompatActivity() {
         val response = assets.readAssetsFile("data.json")
         val typeToken = object : TypeToken<ArrayList<ImageData>>() {}.type
         val imagesList = Gson().fromJson<ArrayList<ImageData>>(response, typeToken)
+        imagesList.reverse()
         updateAdapterData(imagesList)
     }
 
-    private fun updateAdapterData(productsList: ArrayList<ImageData>) {
-        adapter = ImagesListAdapter(productsList, onTapClicked = {
+    private fun updateAdapterData(imageList: ArrayList<ImageData>) {
+        adapter = ImagesListAdapter(imageList, onTapClicked = {
+            launchActivity<ImageDetailActivity> {
+                putParcelableArrayListExtra("Images", imageList)
+                putExtra("Position", it)
+            }
         })
         binding.rvImages.adapter = adapter
     }
